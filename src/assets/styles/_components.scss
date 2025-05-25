@@ -1,0 +1,418 @@
+// Container principal
+.container {
+  @include container;
+}
+
+// Grid system
+.grid {
+  @include grid-responsive;
+}
+
+.grid-1 { @include grid(1); }
+.grid-2 { @include grid(2); }
+.grid-3 { @include grid(3); }
+.grid-4 { @include grid(4); }
+
+// Componentes de botones
+.btn {
+  @include button-base;
+}
+
+.btn-primary {
+  @include button-variant($primary-blue, $primary-blue-dark);
+}
+
+.btn-secondary {
+  @include button-variant($gray-100, $gray-200, $gray-700);
+}
+
+.btn-success {
+  @include button-variant($success-green, darken($success-green, 10%));
+}
+
+.btn-danger {
+  @include button-variant($danger-red, darken($danger-red, 10%));
+}
+
+.btn-warning {
+  @include button-variant($warning-orange, darken($warning-orange, 10%));
+}
+
+// Tamaños de botones
+.btn-sm {
+  @include button-size($spacing-1, $spacing-3, $font-size-xs);
+}
+
+.btn-lg {
+  @include button-size($spacing-3, $spacing-6, $font-size-lg);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+// Componentes de formularios
+.form-group {
+  margin-bottom: $spacing-4;
+}
+
+.form-label {
+  display: block;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $gray-700;
+  margin-bottom: $spacing-1;
+}
+
+.form-input {
+  @include input-base;
+
+  &.error {
+    @include input-error;
+  }
+}
+
+.form-textarea {
+  @include input-base;
+  resize: vertical;
+  min-height: 80px;
+
+  &.error {
+    @include input-error;
+  }
+}
+
+.form-select {
+  @include input-base;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right $spacing-2 center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: $spacing-8;
+  appearance: none;
+}
+
+.form-error {
+  color: $danger-red;
+  font-size: $font-size-sm;
+  margin-top: $spacing-1;
+}
+
+.form-success {
+  color: $success-green;
+  font-size: $font-size-sm;
+  margin-top: $spacing-1;
+}
+
+// Componentes de cards
+.card {
+  @include card-base;
+  @include card-padding;
+}
+
+.card-hover {
+  @include card-hover;
+}
+
+.card-header {
+  border-bottom: 1px solid $gray-200;
+  padding-bottom: $spacing-4;
+  margin-bottom: $spacing-4;
+}
+
+.card-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  margin-bottom: 0;
+}
+
+.card-description {
+  font-size: $font-size-sm;
+  color: $gray-600;
+  margin-top: $spacing-1;
+  margin-bottom: 0;
+}
+
+.card-content {
+  padding: $spacing-4;
+}
+
+.card-footer {
+  border-top: 1px solid $gray-200;
+  padding-top: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+// Componentes específicos de la aplicación
+.activity-card {
+  @include card-base;
+  @include card-hover;
+  @include card-padding;
+  animation: slideInUp $transition-normal ease-out;
+}
+
+.activity-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  padding: $spacing-4;
+  background-color: $gray-50;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius;
+  transition: all $transition-normal;
+
+  &:focus-within {
+    border-color: $primary-blue-light;
+    background-color: $white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  @include mobile {
+    gap: $spacing-3;
+  }
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+}
+
+.activity-item {
+  @include card-base;
+  @include card-padding;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    @include gradient(180deg, $primary-blue, $primary-blue-dark);
+    opacity: 0;
+    transition: opacity $transition-normal;
+  }
+
+  &:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: $shadow-medium;
+    transform: translateX(4px);
+
+    &::before {
+      opacity: 1;
+    }
+
+    @include mobile {
+      transform: none;
+    }
+  }
+}
+
+.activity-title {
+  font-weight: $font-weight-medium;
+  color: $gray-900;
+  margin-bottom: $spacing-1;
+}
+
+.activity-description {
+  font-size: $font-size-sm;
+  color: $gray-600;
+  line-height: $line-height-relaxed;
+  margin-bottom: 0;
+}
+
+// Componentes de fechas
+.date-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-1 $spacing-3;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $white;
+  @include gradient(135deg, $primary-blue, $primary-blue-dark);
+  border-radius: $border-radius-full;
+  box-shadow: $shadow-soft;
+}
+
+.date-section {
+  @include card-base;
+  box-shadow: $shadow-soft;
+}
+
+.date-header {
+  padding: $spacing-4;
+  @include gradient(to right, $gray-50, $gray-100);
+  border-bottom: 1px solid $gray-200;
+}
+
+.date-content {
+  padding: $spacing-4;
+  animation: slideInUp $transition-normal ease-out;
+}
+
+// Componentes de resumen
+.period-summary {
+  padding: $spacing-4;
+  @include gradient(135deg, #dbeafe, #bfdbfe);
+  border-left: 4px solid $primary-blue;
+  border-radius: $border-radius;
+  animation: fadeInLeft $transition-slow ease-out;
+}
+
+.summary-card {
+  padding: $spacing-4;
+  @include gradient(135deg, #dbeafe, #bfdbfe);
+  border-left: 4px solid $primary-blue;
+  border-radius: $border-radius;
+}
+
+.summary-title {
+  font-weight: $font-weight-medium;
+  color: #1e3a8a;
+  margin-bottom: $spacing-2;
+}
+
+.summary-list {
+  font-size: $font-size-sm;
+  color: #1e40af;
+  
+  li {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    margin-bottom: $spacing-1;
+
+    &::before {
+      content: "•";
+      color: $primary-blue;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+// Componentes de acciones
+.action-buttons {
+  display: flex;
+  gap: $spacing-2;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+    width: 100%;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+.icon-button {
+  padding: $spacing-2;
+  border-radius: $border-radius;
+  transition: all $transition-fast;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Estados de carga
+.loading {
+  @include loading-overlay;
+}
+
+// Tooltips
+.tooltip {
+  position: relative;
+
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $gray-900;
+    color: $white;
+    padding: $spacing-2;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-fast;
+    z-index: $z-tooltip;
+    margin-bottom: $spacing-1;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+// Badges de estado
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-1 $spacing-2;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-full;
+
+  &.completed {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  &.pending {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  &.draft {
+    background-color: $gray-100;
+    color: $gray-800;
+  }
+}
+
+// Alertas
+.alert {
+  padding: $spacing-4;
+  border-radius: $border-radius;
+  margin-bottom: $spacing-4;
+  border-left: 4px solid;
+
+  &.alert-info {
+    background-color: #dbeafe;
+    border-left-color: $primary-blue;
+    color: #1e40af;
+  }
+
+  &.alert-success {
+    background-color: #d1fae5;
+    border-left-color: $success-green;
+    color: #065f46;
+  }
+
+  &.alert-warning {
+    background-color: #fef3c7;
+    border-left-color: $warning-orange;
+    color: #92400e;
+  }
+
+  &.alert-error {
+    background-color: #fee2e2;
+    border-left-color: $danger-red;
+    color: #991b1b;
+  }
+}
