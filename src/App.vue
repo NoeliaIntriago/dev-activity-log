@@ -1,20 +1,20 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <img alt="App logo" class="logo" src="./assets/logo.png" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <h1>Dev Activity Log</h1>
+      <p>
+        Una aplicación para registrar y visualizar la actividad de desarrollo realizado.
+        <br />
+        <strong>Desarrollada con Vue 3, Vite y TypeScript.</strong>
+      </p>
     </div>
   </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+  <main></main>
 </template>
 
 <style scoped>
