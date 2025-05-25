@@ -1,6 +1,15 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import PrimeVue from 'primevue/config'
+
+// Estilos necesarios
+import 'primeicons/primeicons.css'
+import 'primeflex/primeflex.css'
+import './assets/styles/globals.scss' // Tus estilos SCSS
+
+const app = createApp(App)
+
+app.use(PrimeVue)
+
+app.mount('#app')
