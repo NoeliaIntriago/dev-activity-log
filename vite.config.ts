@@ -16,6 +16,13 @@ export default defineConfig({
       resolvers: [PrimeVueResolver()],
     }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/assets/styles/_variables.scss";`,
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
