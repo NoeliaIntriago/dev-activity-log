@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import GeneralActivitySection from './components/report/GeneralActivitySection.vue'
+</script>
 
 <template>
   <header>
@@ -14,34 +16,56 @@
     </div>
   </header>
 
-  <main></main>
+  <main class="content">
+    <general-activity-section />
+  </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 header {
-  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    text-align: left;
+    justify-content: flex-start;
+    padding: 2rem 4rem;
+  }
 }
 
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: 1024px) {
+    margin-bottom: 0;
+    margin-right: 2rem;
+  }
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+.wrapper {
+  h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: var(--primary-color, #0f172a);
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  p {
+    margin-top: 0.5rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--text-color, #475569);
   }
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+.content {
+  padding: 2rem 1.5rem;
+
+  @media (min-width: 1024px) {
+    padding: 3rem 3rem;
   }
 }
 </style>
