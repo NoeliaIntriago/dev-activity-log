@@ -13,6 +13,7 @@ export default defineConfig({
     vueJsx(),
     vueDevTools(),
     Components({
+      dts: true,
       resolvers: [PrimeVueResolver()],
     }),
   ],
