@@ -32,6 +32,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Activity } from './types'
+
 import ActivityForm from '../ActivityForm.vue'
 
 const props = defineProps<{
