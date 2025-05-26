@@ -1,6 +1,5 @@
 export type PdfData = {
-  startDate: string
-  endDate: string
+  period: string[]
   activities: Activity[]
   extras: Extras
 }

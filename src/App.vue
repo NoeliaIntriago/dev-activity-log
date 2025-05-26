@@ -1,39 +1,16 @@
 <script setup lang="ts">
-import type { PdfData, Activity } from './types'
+import type { PdfData } from './types'
 
-import moment from 'moment'
 import { ref } from 'vue'
 import PeriodSelector from './components/report/PeriodSelector.vue'
 import GeneralActivitySection from './components/report/GeneralActivitySection.vue'
 import SpecificDatesSection from './components/report/SpecificDatesSection.vue'
 
 const data = ref<PdfData>({
-  startDate: '',
-  endDate: '',
+  period: [],
   activities: [],
   extras: [],
 })
-
-const setDates = (dates: string[]) => {
-  data.value.startDate = moment(dates[0]).format('DD/MM/YYYY')
-  data.value.endDate = dates[1] !== null ? moment(dates[1]).format('DD/MM/YYYY') : ''
-}
-
-const addNewGeneralActivity = (activities: Activity) => {
-  data.value.activities.push(activities)
-}
-
-const removeActivity = (index: number) => {
-  data.value.activities.splice(index, 1)
-}
-
-const addExtraActivity = (date: Date) => {
-  const formattedDate = moment(date).format('DD/MM/YYYY')
-  data.value.extras.push({
-    date: formattedDate,
-    activities: [],
-  })
-}
 </script>
 
 <template>
@@ -51,13 +28,28 @@ const addExtraActivity = (date: Date) => {
   </header>
 
   <main class="content">
-    <PeriodSelector @update-period="setDates" />
-    <GeneralActivitySection
-      :activities="data.activities"
-      @add-activity="addNewGeneralActivity"
-      @remove-activity="removeActivity"
-    />
-    <SpecificDatesSection v-model:extras="data.extras" @add-extra="addExtraActivity" />
+    <TabView>
+      <TabPanel>
+        <template #header>
+          <div>
+            <i class="pi pi-file mr-2"></i>
+            <span class="font-bold">Ingreso de Actividades</span>
+          </div>
+        </template>
+        <PeriodSelector v-model:period="data.period" />
+        <GeneralActivitySection v-model:activities="data.activities" />
+        <SpecificDatesSection v-model:extras="data.extras" />
+      </TabPanel>
+
+      <TabPanel>
+        <template #header>
+          <div>
+            <i class="pi pi-file-pdf mr-2"></i>
+            <span class="font-bold">Generación de PDF</span>
+          </div>
+        </template>
+      </TabPanel>
+    </TabView>
   </main>
 
   <Toast />
