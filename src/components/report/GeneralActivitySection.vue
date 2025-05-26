@@ -6,7 +6,7 @@
     </template>
 
     <template #content>
-      <ActivityForm @add="($event) => $emit('add-activity', $event)" />
+      <ActivityForm @add="($event) => addActivity($event)" />
       <div>
         <DataTable :value="props.activities" resizable-columns>
           <template #empty>
@@ -21,7 +21,7 @@
               <Button
                 icon="pi pi-trash"
                 class="p-button-danger p-button-outlined"
-                @click="$emit('remove-activity', slotProps.rowIndex)"
+                @click="removeActivity(slotProps.rowIndex)"
               />
             </template>
           </Column>
@@ -39,4 +39,19 @@ import ActivityForm from '../ActivityForm.vue'
 const props = defineProps<{
   activities: Activity[]
 }>()
+
+const emit = defineEmits<{
+  (e: 'update:activities', activities: Activity[]): void
+}>()
+
+const addActivity = (activity: Activity) => {
+  const updatedActivities = [...props.activities, activity]
+  emit('update:activities', updatedActivities)
+}
+
+const removeActivity = (index: number) => {
+  const updatedActivities = [...props.activities]
+  updatedActivities.splice(index, 1)
+  emit('update:activities', updatedActivities)
+}
 </script>
