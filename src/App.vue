@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { PdfData, Activity } from './types'
 
+import moment from 'moment'
 import { ref } from 'vue'
 import PeriodSelector from './components/report/PeriodSelector.vue'
 import GeneralActivitySection from './components/report/GeneralActivitySection.vue'
+import SpecificDatesSection from './components/report/SpecificDatesSection.vue'
 
 const data = ref<PdfData>({
   startDate: '',
@@ -13,8 +15,8 @@ const data = ref<PdfData>({
 })
 
 const setDates = (dates: string[]) => {
-  data.value.startDate = dates[0]
-  data.value.endDate = dates[1] || ''
+  data.value.startDate = moment(dates[0]).format('DD/MM/YYYY')
+  data.value.endDate = dates[1] !== null ? moment(dates[1]).format('DD/MM/YYYY') : ''
 }
 
 const addNewGeneralActivity = (activities: Activity) => {
@@ -23,6 +25,14 @@ const addNewGeneralActivity = (activities: Activity) => {
 
 const removeActivity = (index: number) => {
   data.value.activities.splice(index, 1)
+}
+
+const addExtraActivity = (date: Date) => {
+  const formattedDate = moment(date).format('DD/MM/YYYY')
+  data.value.extras.push({
+    date: formattedDate,
+    activities: [],
+  })
 }
 </script>
 
@@ -41,12 +51,13 @@ const removeActivity = (index: number) => {
   </header>
 
   <main class="content">
-    <period-selector @update-period="setDates" />
-    <general-activity-section
+    <PeriodSelector @update-period="setDates" />
+    <GeneralActivitySection
       :activities="data.activities"
       @add-activity="addNewGeneralActivity"
       @remove-activity="removeActivity"
     />
+    <SpecificDatesSection v-model:extras="data.extras" @add-extra="addExtraActivity" />
   </main>
 
   <Toast />

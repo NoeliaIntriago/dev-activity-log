@@ -46,7 +46,7 @@
               />
             </template>
 
-            <activity-form @add="($event) => addActivity(index, $event)" />
+            <ActivityForm @add="($event) => addActivity(index, $event)" />
 
             <div class="mt-2">
               <DataTable :value="extra.activities" resizable-columns>

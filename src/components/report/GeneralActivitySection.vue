@@ -6,7 +6,7 @@
     </template>
 
     <template #content>
-      <activity-form @add="($event) => $emit('add-activity', $event)" />
+      <ActivityForm @add="($event) => $emit('add-activity', $event)" />
       <div>
         <DataTable :value="props.activities" resizable-columns>
           <template #empty>
