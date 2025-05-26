@@ -42,7 +42,7 @@
               <Button
                 icon="pi pi-trash"
                 class="p-button-danger p-button-outlined ml-auto"
-                @click="$emit('remove-extra', index)"
+                @click="removeExtra(index)"
               />
             </template>
 
@@ -64,7 +64,7 @@
                     <Button
                       icon="pi pi-trash"
                       class="p-button-danger p-button-outlined"
-                      @click="removeExtra(slotProps.rowIndex)"
+                      @click="removeActivity(slotProps.rowIndex)"
                     />
                   </template>
                 </Column>
@@ -89,7 +89,6 @@ const props = defineProps<{
 
 const date = ref<Date | null>(null)
 const emit = defineEmits<{
-  (e: 'add-extra', date: Date): void
   (e: 'update:extras'): void
 }>()
 
@@ -101,8 +100,25 @@ const addExtra = () => {
   if (!date.value) {
     return
   }
-  emit('add-extra', date.value)
+
+  const updatedExtras = [...props.extras]
+  const formattedDate = date.value.toLocaleDateString('es-ES', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+  updatedExtras.push({
+    date: formattedDate,
+    activities: [],
+  })
+  emit('update:extras', updatedExtras)
   date.value = null // Reset the date picker after adding
+}
+
+const removeExtra = (index: number) => {
+  const updatedExtras = [...props.extras]
+  updatedExtras.splice(index, 1)
+  emit('update:extras', updatedExtras)
 }
 
 const addActivity = (index: number, activity: Activity) => {
@@ -115,7 +131,7 @@ const addActivity = (index: number, activity: Activity) => {
   emit('update:extras', updatedExtras)
 }
 
-const removeExtra = (index: number) => {
+const removeActivity = (index: number) => {
   const updatedExtras = [...props.extras]
   updatedExtras.splice(index, 1)
   emit('update:extras', updatedExtras)
