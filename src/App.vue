@@ -1,5 +1,29 @@
 <script setup lang="ts">
+import type { PdfData, Activity } from './types'
+
+import { ref } from 'vue'
+import PeriodSelector from './components/report/PeriodSelector.vue'
 import GeneralActivitySection from './components/report/GeneralActivitySection.vue'
+
+const data = ref<PdfData>({
+  startDate: '',
+  endDate: '',
+  activities: [],
+  extras: [],
+})
+
+const setDates = (dates: string[]) => {
+  data.value.startDate = dates[0]
+  data.value.endDate = dates[1] || ''
+}
+
+const addNewGeneralActivity = (activities: Activity) => {
+  data.value.activities.push(activities)
+}
+
+const removeActivity = (index: number) => {
+  data.value.activities.splice(index, 1)
+}
 </script>
 
 <template>
@@ -9,7 +33,7 @@ import GeneralActivitySection from './components/report/GeneralActivitySection.v
     <div class="wrapper">
       <h1>Dev Activity Log</h1>
       <p>
-        Una aplicación para registrar y visualizar la actividad de desarrollo realizado.
+        Una aplicación para registrar y generar reporte de actividades de desarrollo de software.
         <br />
         <strong>Desarrollada con Vue 3, Vite y TypeScript.</strong>
       </p>
@@ -17,55 +41,41 @@ import GeneralActivitySection from './components/report/GeneralActivitySection.v
   </header>
 
   <main class="content">
-    <general-activity-section />
+    <period-selector @update-period="setDates" />
+    <general-activity-section
+      :activities="data.activities"
+      @add-activity="addNewGeneralActivity"
+      @remove-activity="removeActivity"
+    />
   </main>
+
+  <Toast />
+  <footer class="footer">
+    <p>
+      © {{ new Date().getFullYear() }} <strong>DevActivityLog</strong> — Todos los derechos
+      reservados.
+    </p>
+    <p class="legal">
+      Desarrollado con 💻 por
+      <a
+        href="https://github.com/NoeliaIntriago"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="github-link"
+      >
+        NoeliaIntriago
+      </a>
+    </p>
+    <p class="legal">
+      Código fuente disponible en
+      <a
+        href="https://github.com/NoeliaIntriago/DevActivityLog"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="github-link"
+      >
+        GitHub <i class="pi pi-github"></i>
+      </a>
+    </p>
+  </footer>
 </template>
-
-<style scoped lang="scss">
-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2rem 1rem;
-
-  @media (min-width: 1024px) {
-    flex-direction: row;
-    text-align: left;
-    justify-content: flex-start;
-    padding: 2rem 4rem;
-  }
-}
-
-.logo {
-  margin-bottom: 1.5rem;
-
-  @media (min-width: 1024px) {
-    margin-bottom: 0;
-    margin-right: 2rem;
-  }
-}
-
-.wrapper {
-  h1 {
-    font-size: 2rem;
-    margin: 0;
-    color: var(--primary-color, #0f172a);
-  }
-
-  p {
-    margin-top: 0.5rem;
-    font-size: 1.125rem;
-    line-height: 1.6;
-    color: var(--text-color, #475569);
-  }
-}
-
-.content {
-  padding: 2rem 1.5rem;
-
-  @media (min-width: 1024px) {
-    padding: 3rem 3rem;
-  }
-}
-</style>
