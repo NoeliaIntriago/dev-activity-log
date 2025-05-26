@@ -5,6 +5,8 @@ import { ref } from 'vue'
 import PeriodSelector from './components/report/PeriodSelector.vue'
 import GeneralActivitySection from './components/report/GeneralActivitySection.vue'
 import SpecificDatesSection from './components/report/SpecificDatesSection.vue'
+import ReportSummary from './components/report/ReportSummary.vue'
+import PdfGeneratorSection from './components/report/PdfGeneratorSection.vue'
 
 const data = ref<PdfData>({
   period: [],
@@ -48,6 +50,8 @@ const data = ref<PdfData>({
             <span class="font-bold">Generación de PDF</span>
           </div>
         </template>
+        <ReportSummary :data="data" />
+        <PdfGeneratorSection :data="data" />
       </TabPanel>
     </TabView>
   </main>
