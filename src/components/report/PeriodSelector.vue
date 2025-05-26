@@ -15,7 +15,7 @@
           hide-on-range-selection
           :manual-input="false"
           touch-UI
-          @hide="() => $emit('update-period', dates)"
+          @update:modelValue="($event) => $emit('update:period', $event)"
         />
       </div>
     </template>
@@ -24,6 +24,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
+defineProps<{
+  period: string[]
+}>()
 
 const dates = ref<Date[]>([])
 </script>
