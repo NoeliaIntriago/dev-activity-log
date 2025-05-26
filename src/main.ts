@@ -7,6 +7,7 @@ import PrimeVue from 'primevue/config'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import './assets/styles/index.scss'
+import 'primevue/resources/themes/lara-light-teal/theme.css'
 
 const app = createApp(App)
 
