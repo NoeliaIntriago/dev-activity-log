@@ -44,3 +44,17 @@ header {
     padding: 3rem 4rem;
   }
 }
+
+footer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--footer-bg-color, #f8fafc);
+  color: var(--footer-text-color, #334155);
+
+  @media (min-width: 1024px) {
+    text-align: left;
+    padding: 1rem 4rem;
+  }
+}

@@ -54,11 +54,11 @@ const data = ref<PdfData>({
 
   <Toast />
   <footer class="footer">
-    <p>
+    <span>
       © {{ new Date().getFullYear() }} <strong>DevActivityLog</strong> — Todos los derechos
       reservados.
-    </p>
-    <p class="legal">
+    </span>
+    <span>
       Desarrollado con 💻 por
       <a
         href="https://github.com/NoeliaIntriago"
@@ -68,8 +68,8 @@ const data = ref<PdfData>({
       >
         NoeliaIntriago
       </a>
-    </p>
-    <p class="legal">
+    </span>
+    <span>
       Código fuente disponible en
       <a
         href="https://github.com/NoeliaIntriago/DevActivityLog"
@@ -79,6 +79,6 @@ const data = ref<PdfData>({
       >
         GitHub <i class="pi pi-github"></i>
       </a>
-    </p>
+    </span>
   </footer>
 </template>
