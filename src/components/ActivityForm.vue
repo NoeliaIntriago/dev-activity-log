@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Activity } from './types'
+import type { Activity } from '@/assets/types'
 import { ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
 

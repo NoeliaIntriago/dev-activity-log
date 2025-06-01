@@ -64,7 +64,7 @@
                     <Button
                       icon="pi pi-trash"
                       class="p-button-danger p-button-outlined"
-                      @click="removeActivity(slotProps.rowIndex)"
+                      @click="removeActivity(slotProps.index)"
                     />
                   </template>
                 </Column>
@@ -78,18 +78,18 @@
 </template>
 
 <script setup lang="ts">
-import type { Extra, Activity } from './types'
+import type { Extras, Activity } from '@/assets/types'
 import { ref, computed } from 'vue'
 
 import ActivityForm from '../ActivityForm.vue'
 
 const props = defineProps<{
-  extras: Extra[]
+  extras: Extras[]
 }>()
 
 const date = ref<Date | null>(null)
 const emit = defineEmits<{
-  (e: 'update:extras'): void
+  (e: 'update:extras', newData: Extras[]): void
 }>()
 
 const disabledDates = computed(() => {

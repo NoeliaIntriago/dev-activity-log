@@ -21,7 +21,7 @@
               <Button
                 icon="pi pi-trash"
                 class="p-button-danger p-button-outlined"
-                @click="removeActivity(slotProps.rowIndex)"
+                @click="removeActivity(slotProps.index)"
               />
             </template>
           </Column>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Activity } from './types'
+import type { Activity } from '@/assets/types'
 
 import ActivityForm from '../ActivityForm.vue'
 

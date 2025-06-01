@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PdfData } from '@/types'
+import type { PdfData } from '@/assets/types'
 
 import moment from 'moment'
 import { computed } from 'vue'
