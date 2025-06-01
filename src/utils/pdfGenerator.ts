@@ -3,9 +3,7 @@ import moment from 'moment'
 import type { TDocumentDefinitions } from 'pdfmake/interfaces'
 
 export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
-  console.log('generarPdfDefinition', data)
-
-  const docDefinition = {
+  return {
     content: [
       {
         text: 'Reporte de Entrega de Actividades de Desarrollo de Software',
@@ -22,19 +20,18 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
       },
       {
         text: 'Este reporte detalle las actividades de programación realizadas.',
-        alignment: 'left',
         tocItem: false,
+        alignment: 'left',
       },
       {
         text: 'Actividades Realizadas',
         tocItem: false,
         style: 'subheader',
         alignment: 'left',
-        margin: [0, 10, 0, 5],
+        margin: [0, 20, 0, 5],
       },
       {
         style: 'tableStyle',
-        tocItem: false,
         table: {
           widths: ['*', 'auto', 'auto'],
           headerRows: 1,
@@ -50,7 +47,7 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
         pageBreak: 'before',
         margin: [0, 10, 0, 5],
       },
-      ...(data.annexes.length > 0
+      data.annexes.length > 0
         ? data.annexes.map((base64) => ({
             image: base64,
             width: 400,
@@ -61,26 +58,33 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
         : [
             {
               text: 'No se han adjuntado anexos.',
-              alignment: 'center',
               tocItem: false,
+              alignment: 'center',
             },
-          ]),
+          ],
       {
         text: `${data.owner}`,
+        tocItem: false,
         alignment: 'center',
         italics: true,
+        style: 'normal',
+        pageBreak: 'before',
         margin: [0, 300, 0, 0],
       },
       {
         text: `RUC: ${data.ruc}`,
+        tocItem: false,
         alignment: 'center',
         italics: true,
+        style: 'normal',
         margin: [0, 5, 0, 0],
       },
       {
         text: `Fecha de generación: ${moment().format('DD/MM/YYYY')}`,
+        tocItem: false,
         alignment: 'center',
         italics: true,
+        style: 'normal',
         margin: [0, 5, 0, 0],
       },
     ],
@@ -93,7 +97,7 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
       subheader: {
         fontSize: 13,
         bold: true,
-        margin: [0, 10, 0, 5],
+        margin: [0, 20, 0, 5],
       },
       tableStyle: {
         margin: [0, 5, 0, 15],
@@ -113,10 +117,11 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
         bold: true,
         margin: [4, 2, 4, 2],
       },
+      normal: {
+        fontSize: 10,
+      },
     },
   }
-
-  return docDefinition
 }
 
 const buildTableBody = (data: PdfData) => {
