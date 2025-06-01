@@ -1,9 +1,10 @@
 export type PdfData = {
   owner: string
+  ruc: string
   period: string[]
   activities: Activity[]
   extras: Extras[]
-  annexes: File[]
+  annexes: string[]
 }
 
 export type Extras = {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PdfData } from './types'
+import type { PdfData } from '@/assets/types'
 
 import { ref } from 'vue'
 import PeriodSelector from './components/report/PeriodSelector.vue'
@@ -7,11 +7,16 @@ import GeneralActivitySection from './components/report/GeneralActivitySection.v
 import SpecificDatesSection from './components/report/SpecificDatesSection.vue'
 import ReportSummary from './components/report/ReportSummary.vue'
 import PdfGeneratorSection from './components/report/PdfGeneratorSection.vue'
+import MetadataInputSection from './components/report/MetadataInputSection.vue'
+import AnnexUploader from './components/report/AnnexUploader.vue'
 
 const data = ref<PdfData>({
+  owner: '',
+  ruc: '',
   period: [],
   activities: [],
   extras: [],
+  annexes: [],
 })
 </script>
 
@@ -50,6 +55,10 @@ const data = ref<PdfData>({
             <span class="font-bold">Generación de PDF</span>
           </div>
         </template>
+        <div class="grid align-items-center justify-content-between my-4">
+          <MetadataInputSection v-model:owner="data.owner" v-model:ruc="data.ruc" />
+          <AnnexUploader v-model:annexes="data.annexes" />
+        </div>
         <ReportSummary :data="data" />
         <PdfGeneratorSection :data="data" />
       </TabPanel>
@@ -76,7 +85,7 @@ const data = ref<PdfData>({
     <span>
       Código fuente disponible en
       <a
-        href="https://github.com/NoeliaIntriago/DevActivityLog"
+        href="https://github.com/NoeliaIntriago/dev-activity-log"
         target="_blank"
         rel="noopener noreferrer"
         class="github-link"
