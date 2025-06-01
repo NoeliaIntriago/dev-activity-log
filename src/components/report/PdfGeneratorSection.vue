@@ -14,6 +14,11 @@ import type { PdfData } from '@/types'
 import { useToast } from 'primevue/usetoast'
 import moment from 'moment'
 import { computed } from 'vue'
+import pdfMake from 'pdfmake/build/pdfmake'
+import * as pdfFonts from 'pdfmake/build/vfs_fonts'
+import { generarPdfDefinition } from '@/utils/pdfGenerator'
+
+pdfMake.vfs = pdfFonts.vfs
 
 const toast = useToast()
 
@@ -74,5 +79,13 @@ const validarDatos = () => {
 
 const generarPdf = () => {
   if (!validarDatos()) return
+
+  const pdfData = {
+    ...props.data,
+    period: formattedPeriod.value,
+  }
+
+  const pdfDefinition = generarPdfDefinition(pdfData, 'Noelia Intriago')
+  pdfMake.createPdf(pdfDefinition).download(`reporte_${pdfData.period[0]}_${pdfData.period[1]}.pdf`)
 }
 </script>
