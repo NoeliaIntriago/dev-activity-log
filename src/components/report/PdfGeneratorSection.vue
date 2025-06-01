@@ -1,16 +1,11 @@
 <template>
-  <div class="flex justify-center">
-    <Button
-      label="Generar PDF"
-      icon="pi pi-file-pdf"
-      class="p-button-outlined"
-      @click="generarPdf"
-    />
+  <div class="flex justify-content-center">
+    <Button label="Generar PDF" icon="pi pi-file-pdf" class="p-button" @click="generarPdf" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { PdfData } from '@/types'
+import type { PdfData } from '@/assets/types'
 import { useToast } from 'primevue/usetoast'
 import moment from 'moment'
 import { computed } from 'vue'
@@ -36,7 +31,7 @@ const formattedPeriod = computed(() => {
 })
 
 const validarDatos = () => {
-  if (formattedPeriod.value < 2) {
+  if (formattedPeriod.value.length < 2) {
     toast.add({ severity: 'error', summary: 'Error', detail: 'Período no definido', life: 3000 })
     return false
   }
@@ -74,6 +69,26 @@ const validarDatos = () => {
     return false
   }
 
+  if (props.data.owner.trim() === '') {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'El responsable no puede estar vacío',
+      life: 3000,
+    })
+    return false
+  }
+
+  if (props.data.ruc.trim() === '') {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'El RUC no puede estar vacío',
+      life: 3000,
+    })
+    return false
+  }
+
   return true
 }
 
@@ -85,7 +100,7 @@ const generarPdf = () => {
     period: formattedPeriod.value,
   }
 
-  const pdfDefinition = generarPdfDefinition(pdfData, 'Noelia Intriago')
-  pdfMake.createPdf(pdfDefinition).download(`reporte_${pdfData.period[0]}_${pdfData.period[1]}.pdf`)
+  const pdfDefinition = generarPdfDefinition(pdfData)
+  pdfMake.createPdf(pdfDefinition).download(`reporte_${pdfData.owner.split('_')}.pdf`)
 }
 </script>
