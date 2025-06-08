@@ -1,8 +1,7 @@
 # Dev Activity Log 🧾
 
 ![version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![license](https://img.shields.io/github/license/NoeliaIntriago/dev-activity-log)
-![issues](https://img.shields.io/github/issues/NoeliaIntriago/dev-activity-log)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![vercel](https://img.shields.io/badge/deploy-vercel-brightgreen)
 
 **Dev Activity Log** es una aplicación web construida con Vue 3 + TypeScript que permite registrar actividades realizadas durante periodos específicos y generar reportes en PDF listos para firmar. Es ideal para desarrolladores, docentes o cualquier persona que necesite documentar sus actividades de forma clara, visual y estructurada.
