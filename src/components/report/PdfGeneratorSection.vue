@@ -16,7 +16,7 @@ import type { PdfData } from '@/assets/types'
 import { useToast } from 'primevue/usetoast'
 import { useConfirm } from 'primevue/useconfirm'
 import moment from 'moment'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 import { generarPdfDefinition } from '@/utils/pdfGenerator'
@@ -30,9 +30,8 @@ const props = defineProps<{
   data: PdfData
 }>()
 
-const hasSavedData = computed(() => {
-  return localStorage.getItem('pdfData') !== null
-})
+const hasSavedData = inject('hasSavedData')
+const clear = inject<() => void>('clear')!
 
 const checkPeriod = computed(() => {
   if (props.data.period === null || props.data.period.length < 2) return []
@@ -124,9 +123,9 @@ const deleteSavedData = () => {
     rejectClass: 'p-button-secondary p-button-outlined',
     acceptClass: 'p-button-danger',
     accept: () => {
-      localStorage.removeItem('pdfData')
+      clear()
       toast.add({
-        severity: 'warn',
+        severity: 'success',
         summary: 'Datos borrados',
         detail: 'Cambios guardados han sido eliminados',
         life: 3000,

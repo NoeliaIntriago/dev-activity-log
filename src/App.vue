@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { PdfData } from '@/assets/types'
 
-import { onMounted, ref, watch } from 'vue'
+import { provide, watch } from 'vue'
+import { useLocalStorageSync } from '@/composables/useLocalStorageSync'
 import SpecificDatesSection from './components/report/SpecificDatesSection.vue'
 import ReportSummary from './components/report/ReportSummary.vue'
 import PdfGeneratorSection from './components/report/PdfGeneratorSection.vue'
@@ -9,36 +10,37 @@ import MetadataInputSection from './components/report/MetadataInputSection.vue'
 import AnnexUploader from './components/report/AnnexUploader.vue'
 import GeneralPeriodSection from './components/report/GeneralPeriodSection.vue'
 
-const data = ref<PdfData>({
-  owner: '',
-  ruc: '',
-  period: [],
-  activities: [],
-  extras: [],
-  annexes: [],
-})
+const {
+  state: data,
+  save,
+  clear,
+  hasSavedData,
+} = useLocalStorageSync<PdfData>(
+  'pdfData',
+  {
+    owner: '',
+    ruc: '',
+    period: [],
+    activities: [],
+    extras: [],
+    annexes: [],
+  },
+  {
+    parseDates: ['period'], // campos que deben convertirse a Date[]
+    ttl: 1000 * 60 * 60 * 24 * 7, // tiempo de vida de los datos en milisegundos (7 días)
+  },
+)
 
 watch(
   data,
-  (newData) => {
-    const plainData = JSON.parse(JSON.stringify(newData))
-    localStorage.setItem('pdfData', JSON.stringify(plainData))
+  () => {
+    save()
   },
   { deep: true },
 )
 
-onMounted(() => {
-  const saved = localStorage.getItem('pdfData')
-  if (saved) {
-    const parsed = JSON.parse(saved)
-
-    if (Array.isArray(parsed.period)) {
-      parsed.period = parsed.period.map((d: string) => new Date(d))
-    }
-
-    data.value = parsed
-  }
-})
+provide('clear', clear)
+provide('hasSavedData', hasSavedData)
 </script>
 
 <template>
