@@ -2,6 +2,8 @@ import type { PdfData } from '@/assets/types/main'
 import moment from 'moment'
 import type { TDocumentDefinitions } from 'pdfmake/interfaces'
 
+const DATE_COLUMN_WIDTH = 150
+
 export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
   return {
     footer: function (currentPage, pageCount) {
@@ -70,7 +72,7 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
       {
         style: 'tableStyle',
         table: {
-          widths: ['*', 'auto', 'auto'],
+          widths: [DATE_COLUMN_WIDTH, '*', '*'],
           headerRows: 1,
           body: [...buildTableBody(data)],
         },
@@ -117,7 +119,7 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
         margin: [0, 5, 0, 0],
       },
       {
-        text: `Fecha de generación: ${moment().format('DD/MM/YYYY')}`,
+        text: `Fecha de generación: ${moment().format('YYYY/MMM/DD')}`,
         tocItem: false,
         alignment: 'center',
         italics: true,
@@ -176,7 +178,7 @@ const buildTableBody = (data: PdfData) => {
     if (idx === 0) {
       body.push([
         {
-          text: `${moment(data.period[0]).format('DD/MM/YYYY')} ~ ${moment(data.period[1]).format('DD/MM/YYYY')}`,
+          text: `${moment(data.period[0]).format('YYYY/MMM/DD')} ~ ${moment(data.period[1]).format('YYYY/MMM/DD')}`,
           rowSpan: data.activities.length,
           style: 'tableCellBold',
         },
@@ -197,7 +199,7 @@ const buildTableBody = (data: PdfData) => {
       if (idx === 0) {
         body.push([
           {
-            text: moment(extra.date).format('DD/MM/YYYY'),
+            text: moment(extra.date).format('YYYY/MMM/DD'),
             rowSpan: extra.activities.length,
             style: 'tableCellBold',
           },

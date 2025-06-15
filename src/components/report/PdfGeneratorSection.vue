@@ -30,7 +30,7 @@ const props = defineProps<{
   data: PdfData
 }>()
 
-const hasSavedData = inject('hasSavedData')
+const hasSavedData = inject<boolean>('hasSavedData')
 const clear = inject<() => void>('clear')!
 
 const checkPeriod = computed(() => {
