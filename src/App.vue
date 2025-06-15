@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import type { PdfData } from '@/assets/types'
 
-import { ref } from 'vue'
-import PeriodSelector from './components/report/PeriodSelector.vue'
-import GeneralActivitySection from './components/report/GeneralActivitySection.vue'
+import { onMounted, ref, watch } from 'vue'
 import SpecificDatesSection from './components/report/SpecificDatesSection.vue'
 import ReportSummary from './components/report/ReportSummary.vue'
 import PdfGeneratorSection from './components/report/PdfGeneratorSection.vue'
 import MetadataInputSection from './components/report/MetadataInputSection.vue'
 import AnnexUploader from './components/report/AnnexUploader.vue'
+import GeneralPeriodSection from './components/report/GeneralPeriodSection.vue'
 
 const data = ref<PdfData>({
   owner: '',
@@ -17,6 +16,23 @@ const data = ref<PdfData>({
   activities: [],
   extras: [],
   annexes: [],
+})
+
+watch(
+  data,
+  (newData) => {
+    localStorage.setItem('pdfData', JSON.stringify(newData))
+  },
+  { deep: true },
+)
+
+onMounted(() => {
+  const savedData = localStorage.getItem('pdfData')
+  if (savedData) {
+    const parsed = JSON.parse(savedData)
+    parsed.period = parsed.period.map((d: string) => new Date(d))
+    data.value = parsed
+  }
 })
 </script>
 
@@ -43,8 +59,7 @@ const data = ref<PdfData>({
             <span class="font-bold">Ingreso de Actividades</span>
           </div>
         </template>
-        <PeriodSelector v-model:period="data.period" />
-        <GeneralActivitySection v-model:activities="data.activities" />
+        <GeneralPeriodSection v-model:period="data.period" v-model:activities="data.activities" />
         <SpecificDatesSection v-model:extras="data.extras" />
       </TabPanel>
 
@@ -66,6 +81,8 @@ const data = ref<PdfData>({
   </main>
 
   <Toast />
+  <ConfirmDialog></ConfirmDialog>
+
   <footer class="footer">
     <span>
       © {{ new Date().getFullYear() }} <strong>DevActivityLog</strong> — Todos los derechos
