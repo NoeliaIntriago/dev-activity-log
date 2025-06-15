@@ -16,6 +16,10 @@
   - Agrupación por fechas.
   - Diseño limpio y márgenes personalizados.
   - Espacio final para firma manual.
+  - Marca de derecho de creación de contenido en el pie de página.
+- 🔄 Botón para volver al inicio desde cualquier parte de la aplicación.
+- 📀 Almacenamiento local de los datos ingresados para evitar la pérdida de información.
+- 🔢 Ajuste automático de imágenes grandes para evitar inserciones de páginas adicionales en el PDF.
 - 💾 Todo el proceso funciona **100% en el frontend** (sin backend).
 
 ## 🛠️ Tecnologías
@@ -63,17 +67,19 @@ src/
 │   ├── ActivityForm.vue
 │   └── report/
 │       ├── AnnexUploader.vue
-│       ├── GeneralActivitySection.vue
+│       ├── GeneralPeriodSection.vue
 │       ├── MetadataInputSection.vue
 │       ├── PdfGeneratorSection.vue
-│       ├── PeriodSelector.vue
 │       ├── ReportSummary.vue
 │       └── SpecificDatesSection.vue
 ├── composables/
+│   ├── useLocalStorageSync.ts
 │   └── useClipboardImagePaste.ts
 ├── utils/
 │   ├── fileHandler.ts
-│   └── pdfGenerator.ts
+│   └── pdf/
+│       ├── generateDefinition.vue
+│       └── pdfLayoutConstants.vue
 └── App.vue
 ```
 
@@ -85,10 +91,22 @@ La app está desplegada en Vercel y se actualiza automáticamente con cada `push
 
 ### Formulario de actividades
 
+![Formulario_Actividades](https://github.com/user-attachments/assets/5c339661-28db-4b3c-9a0d-f62dac8c4435)
+
 ### Vista previa de imágenes
+
+![Vista_Previa_Imagenes](https://github.com/user-attachments/assets/6b4ae44d-99c3-4e9f-975d-b6a5e4d1d2fc)
 
 ### PDF generado con espacio de firma
 
+_Nota: Las siguientes imágenes son de contenido privado y han sido censuradas intencionalmente para proteger la información confidencial._
+
+![Pdf_Actividades](https://github.com/user-attachments/assets/d1cd4636-e91c-414e-9037-3f45957dd160)
+
+![Pdf_Anexos](https://github.com/user-attachments/assets/19830a78-220a-43ef-a341-42ed3f921eb1)
+
+![Pdf_Firma](https://github.com/user-attachments/assets/252b5771-3cc4-45a1-a576-4ef1b9e56a80)
+                               
 ## 📋 Changelog
 
 Consulta las versiones publicadas en el [CHANGELOG.md](/CHANGELOG.md) o en la [sección de releases](https://github.com/NoeliaIntriago/dev-activity-log/releases).
