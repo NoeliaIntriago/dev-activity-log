@@ -1,14 +1,18 @@
 import type { PdfData } from '@/assets/types/main'
 import moment from 'moment'
+import * as constants from './pdfLayoutConstants'
 import type { TDocumentDefinitions } from 'pdfmake/interfaces'
-
-const DATE_COLUMN_WIDTH = 150
 
 export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
   return {
     footer: function (currentPage, pageCount) {
       return {
-        margin: [40, 0, 40, 10],
+        margin: [
+          constants.FOOTER_MARGIN_LEFT,
+          constants.FOOTER_MARGIN_TOP,
+          constants.FOOTER_MARGIN_RIGHT,
+          constants.FOOTER_MARGIN_BOTTOM,
+        ],
         layout: 'noBorders',
         table: {
           widths: ['*', '*'],
@@ -72,7 +76,7 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
       {
         style: 'tableStyle',
         table: {
-          widths: [DATE_COLUMN_WIDTH, '*', '*'],
+          widths: constants.TABLE_WIDTHS,
           headerRows: 1,
           body: [...buildTableBody(data)],
         },
@@ -89,10 +93,15 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
       data.annexes.length > 0
         ? data.annexes.map((base64) => ({
             image: base64,
-            width: 400,
+            fit: [constants.FIT_IMAGE_WIDTH, constants.FIT_IMAGE_HEIGHT],
             alignment: 'center',
             tocItem: false,
-            margin: [0, 10, 0, 10],
+            margin: [
+              constants.IMAGE_MARGIN_LEFT,
+              constants.IMAGE_MARGIN_TOP,
+              constants.IMAGE_MARGIN_RIGHT,
+              constants.IMAGE_MARGIN_BOTTOM,
+            ],
           }))
         : [
             {

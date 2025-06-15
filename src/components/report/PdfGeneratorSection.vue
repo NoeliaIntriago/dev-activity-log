@@ -19,7 +19,7 @@ import moment from 'moment'
 import { computed, inject } from 'vue'
 import pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
-import { generarPdfDefinition } from '@/utils/pdfGenerator'
+import { generarPdfDefinition } from '@/utils/pdf/generateDefinition'
 
 pdfMake.vfs = pdfFonts.vfs
 
