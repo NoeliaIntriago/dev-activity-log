@@ -25,6 +25,6 @@ const props = defineProps<{
 
 const period = computed(() => {
   if (props.data.period === null || props.data.period.length < 2) return 'No definido'
-  return `${moment(props.data.period[0]).format('YYYY-MM-DD')} - ${moment(props.data.period[1]).format('YYYY-MM-DD')}`
+  return `${moment(props.data.period[0]).format('YYYY/MMM/DD')} - ${moment(props.data.period[1]).format('YYYY/MMM/DD')}`
 })
 </script>

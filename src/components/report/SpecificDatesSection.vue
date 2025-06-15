@@ -36,7 +36,7 @@
         <Accordion expandIcon="pi pi-plus" collapseIcon="pi pi-minus">
           <AccordionTab v-for="(extra, index) in props.extras" :key="index">
             <template #header>
-              <Badge :value="extra.date" severity="secondary" />
+              <Badge :value="moment(extra.date).format('YYYY/MMM/DD')" severity="secondary" />
               <span class="ml-2">{{ extra.activities.length }} actividades</span>
 
               <Button
@@ -82,6 +82,7 @@ import type { Extras, Activity } from '@/assets/types'
 import { ref, computed } from 'vue'
 
 import ActivityForm from '../ActivityForm.vue'
+import moment from 'moment'
 
 const props = defineProps<{
   extras: Extras[]
@@ -102,13 +103,8 @@ const addExtra = () => {
   }
 
   const updatedExtras = [...props.extras]
-  const formattedDate = date.value.toLocaleDateString('es-ES', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  })
   updatedExtras.push({
-    date: formattedDate,
+    date: date.value,
     activities: [],
   })
   emit('update:extras', updatedExtras)
