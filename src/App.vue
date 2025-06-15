@@ -21,16 +21,21 @@ const data = ref<PdfData>({
 watch(
   data,
   (newData) => {
-    localStorage.setItem('pdfData', JSON.stringify(newData))
+    const plainData = JSON.parse(JSON.stringify(newData))
+    localStorage.setItem('pdfData', JSON.stringify(plainData))
   },
   { deep: true },
 )
 
 onMounted(() => {
-  const savedData = localStorage.getItem('pdfData')
-  if (savedData) {
-    const parsed = JSON.parse(savedData)
-    parsed.period = parsed.period.map((d: string) => new Date(d))
+  const saved = localStorage.getItem('pdfData')
+  if (saved) {
+    const parsed = JSON.parse(saved)
+
+    if (Array.isArray(parsed.period)) {
+      parsed.period = parsed.period.map((d: string) => new Date(d))
+    }
+
     data.value = parsed
   }
 })

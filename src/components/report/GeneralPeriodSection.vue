@@ -69,11 +69,7 @@ const emit = defineEmits<{
 }>()
 
 const updatePeriod = (value: string | Date | Date[] | string[] | undefined) => {
-  if (Array.isArray(value) && value.every((v) => v instanceof Date)) {
-    emit('update:period', value as Date[])
-  } else {
-    emit('update:period', [])
-  }
+  emit('update:period', value as Date[])
 }
 
 const addActivity = (activity: Activity) => {
