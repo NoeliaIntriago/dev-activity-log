@@ -9,6 +9,7 @@ import PdfGeneratorSection from './components/report/PdfGeneratorSection.vue'
 import MetadataInputSection from './components/report/MetadataInputSection.vue'
 import AnnexUploader from './components/report/AnnexUploader.vue'
 import GeneralPeriodSection from './components/report/GeneralPeriodSection.vue'
+import ScrollToTopButton from './components/ScrollToTopButton.vue'
 
 const {
   state: data,
@@ -87,6 +88,7 @@ provide('hasSavedData', hasSavedData)
     </TabView>
   </main>
 
+  <ScrollToTopButton />
   <Toast />
   <ConfirmDialog></ConfirmDialog>
 
