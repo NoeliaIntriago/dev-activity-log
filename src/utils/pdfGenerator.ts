@@ -196,7 +196,11 @@ const buildTableBody = (data: PdfData) => {
     extra.activities.forEach((actividad, idx) => {
       if (idx === 0) {
         body.push([
-          { text: extra.date, rowSpan: extra.activities.length, style: 'tableCellBold' },
+          {
+            text: moment(extra.date).format('DD/MM/YYYY'),
+            rowSpan: extra.activities.length,
+            style: 'tableCellBold',
+          },
           { text: actividad.title, style: 'tableCellBold' },
           { text: actividad.description, style: 'tableCell' },
         ])
