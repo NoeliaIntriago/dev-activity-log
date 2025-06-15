@@ -1,14 +1,14 @@
 export type PdfData = {
   owner: string
   ruc: string
-  period: string[]
+  period: Date[]
   activities: Activity[]
   extras: Extras[]
   annexes: string[]
 }
 
 export type Extras = {
-  date: string
+  date: Date
   activities: Activity[]
 }
 

@@ -1,23 +1,46 @@
 <script setup lang="ts">
 import type { PdfData } from '@/assets/types'
 
-import { ref } from 'vue'
-import PeriodSelector from './components/report/PeriodSelector.vue'
-import GeneralActivitySection from './components/report/GeneralActivitySection.vue'
+import { provide, watch } from 'vue'
+import { useLocalStorageSync } from '@/composables/useLocalStorageSync'
 import SpecificDatesSection from './components/report/SpecificDatesSection.vue'
 import ReportSummary from './components/report/ReportSummary.vue'
 import PdfGeneratorSection from './components/report/PdfGeneratorSection.vue'
 import MetadataInputSection from './components/report/MetadataInputSection.vue'
 import AnnexUploader from './components/report/AnnexUploader.vue'
+import GeneralPeriodSection from './components/report/GeneralPeriodSection.vue'
 
-const data = ref<PdfData>({
-  owner: '',
-  ruc: '',
-  period: [],
-  activities: [],
-  extras: [],
-  annexes: [],
-})
+const {
+  state: data,
+  save,
+  clear,
+  hasSavedData,
+} = useLocalStorageSync<PdfData>(
+  'pdfData',
+  {
+    owner: '',
+    ruc: '',
+    period: [],
+    activities: [],
+    extras: [],
+    annexes: [],
+  },
+  {
+    parseDates: ['period'], // campos que deben convertirse a Date[]
+    ttl: 1000 * 60 * 60 * 24 * 7, // tiempo de vida de los datos en milisegundos (7 días)
+  },
+)
+
+watch(
+  data,
+  () => {
+    save()
+  },
+  { deep: true },
+)
+
+provide('clear', clear)
+provide('hasSavedData', hasSavedData)
 </script>
 
 <template>
@@ -43,8 +66,7 @@ const data = ref<PdfData>({
             <span class="font-bold">Ingreso de Actividades</span>
           </div>
         </template>
-        <PeriodSelector v-model:period="data.period" />
-        <GeneralActivitySection v-model:activities="data.activities" />
+        <GeneralPeriodSection v-model:period="data.period" v-model:activities="data.activities" />
         <SpecificDatesSection v-model:extras="data.extras" />
       </TabPanel>
 
@@ -66,6 +88,8 @@ const data = ref<PdfData>({
   </main>
 
   <Toast />
+  <ConfirmDialog></ConfirmDialog>
+
   <footer class="footer">
     <span>
       © {{ new Date().getFullYear() }} <strong>DevActivityLog</strong> — Todos los derechos

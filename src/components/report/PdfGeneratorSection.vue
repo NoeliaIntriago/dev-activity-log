@@ -1,5 +1,12 @@
 <template>
-  <div class="flex justify-content-center">
+  <div class="flex justify-content-end">
+    <Button
+      v-if="hasSavedData"
+      label="Borrar cambios guardados"
+      icon="pi pi-trash"
+      class="p-button-outlined p-button-danger mr-2"
+      @click="deleteSavedData"
+    />
     <Button label="Generar PDF" icon="pi pi-file-pdf" class="p-button" @click="generarPdf" />
   </div>
 </template>
@@ -7,8 +14,9 @@
 <script setup lang="ts">
 import type { PdfData } from '@/assets/types'
 import { useToast } from 'primevue/usetoast'
+import { useConfirm } from 'primevue/useconfirm'
 import moment from 'moment'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 import { generarPdfDefinition } from '@/utils/pdfGenerator'
@@ -16,27 +24,28 @@ import { generarPdfDefinition } from '@/utils/pdfGenerator'
 pdfMake.vfs = pdfFonts.vfs
 
 const toast = useToast()
+const confirm = useConfirm()
 
 const props = defineProps<{
   data: PdfData
 }>()
 
-const formattedPeriod = computed(() => {
+const hasSavedData = inject<boolean>('hasSavedData')
+const clear = inject<() => void>('clear')!
+
+const checkPeriod = computed(() => {
   if (props.data.period === null || props.data.period.length < 2) return []
 
-  return [
-    moment(props.data.period[0]).format('YYYY-MM-DD'),
-    moment(props.data.period[1]).format('YYYY-MM-DD'),
-  ]
+  return props.data.period
 })
 
 const validarDatos = () => {
-  if (formattedPeriod.value.length < 2) {
+  if (checkPeriod.value.length < 2) {
     toast.add({ severity: 'error', summary: 'Error', detail: 'Período no definido', life: 3000 })
     return false
   }
 
-  if (formattedPeriod.value[0] === formattedPeriod.value[1]) {
+  if (checkPeriod.value[0] === checkPeriod.value[1]) {
     toast.add({
       severity: 'error',
       summary: 'Error',
@@ -95,14 +104,34 @@ const validarDatos = () => {
 const generarPdf = () => {
   if (!validarDatos()) return
 
-  const pdfData = {
-    ...props.data,
-    period: formattedPeriod.value,
-  }
+  const pdfDefinition = generarPdfDefinition(props.data)
 
-  const pdfDefinition = generarPdfDefinition(pdfData)
-  const filename = `reporte_${formattedPeriod.value[0].replace(/-/g, '_')}_${formattedPeriod.value[1].replace(/-/g, '_')}.pdf`
+  const startDate = moment(checkPeriod.value[0]).format('YYYY-MM-DD')
+  const endDate = moment(checkPeriod.value[1]).format('YYYY-MM-DD')
+  const filename = `reporte_${startDate.replace(/-/g, '_')}_${endDate.replace(/-/g, '_')}.pdf`
 
   pdfMake.createPdf(pdfDefinition).download(filename)
+}
+
+const deleteSavedData = () => {
+  confirm.require({
+    message: '¿Estás seguro de que deseas borrar los datos guardados?',
+    header: 'Confirmación',
+    icon: 'pi pi-info-circle',
+    rejectLabel: 'Cancelar',
+    acceptLabel: 'Borrar',
+    rejectClass: 'p-button-secondary p-button-outlined',
+    acceptClass: 'p-button-danger',
+    accept: () => {
+      clear()
+      toast.add({
+        severity: 'success',
+        summary: 'Datos borrados',
+        detail: 'Cambios guardados han sido eliminados',
+        life: 3000,
+      })
+    },
+    reject: () => {},
+  })
 }
 </script>
