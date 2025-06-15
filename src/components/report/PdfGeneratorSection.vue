@@ -101,6 +101,8 @@ const generarPdf = () => {
   }
 
   const pdfDefinition = generarPdfDefinition(pdfData)
-  pdfMake.createPdf(pdfDefinition).download(`reporte_${pdfData.owner.split('_')}.pdf`)
+  const filename = `reporte_${formattedPeriod.value[0].replace(/-/g, '_')}_${formattedPeriod.value[1].replace(/-/g, '_')}.pdf`
+
+  pdfMake.createPdf(pdfDefinition).download(filename)
 }
 </script>
