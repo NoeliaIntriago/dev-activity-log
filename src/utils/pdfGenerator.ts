@@ -4,6 +4,43 @@ import type { TDocumentDefinitions } from 'pdfmake/interfaces'
 
 export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
   return {
+    footer: function (currentPage, pageCount) {
+      return {
+        margin: [40, 0, 40, 10],
+        layout: 'noBorders',
+        table: {
+          widths: ['*', '*'],
+          body: [
+            [
+              {
+                stack: [
+                  {
+                    text: `© ${new Date().getFullYear()} Dev Activity Log • Documento generado por Noelia Intriago`,
+                    fontSize: 8,
+                    color: 'gray',
+                  },
+                  {
+                    text: 'Tool provided by Nols',
+                    fontSize: 6,
+                    color: 'gray',
+                    italics: true,
+                    opacity: 0.5,
+                    margin: [0, 2, 0, 0],
+                  },
+                ],
+                alignment: 'left',
+              },
+              {
+                text: `Página ${currentPage} de ${pageCount}`,
+                alignment: 'right',
+                fontSize: 8,
+                color: 'gray',
+              },
+            ],
+          ],
+        },
+      }
+    },
     content: [
       {
         text: 'Reporte de Entrega de Actividades de Desarrollo de Software',
