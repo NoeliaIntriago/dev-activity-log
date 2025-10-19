@@ -24,6 +24,7 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.3",
+    "@semantic-release/npm": "^13.0.0",
     "@tsconfig/node22": "^22.0.1",
     "@types/node": "^22.14.0",
     "@types/pdfmake": "^0.2.11",
