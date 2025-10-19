@@ -106,9 +106,9 @@ const generarPdf = () => {
 
   const pdfDefinition = generarPdfDefinition(props.data)
 
-  const startDate = format(checkPeriod.value[0], 'yyyy-MM-dd')
-  const endDate = format(checkPeriod.value[1], 'yyyy-MM-dd')
-  const filename = `reporte_${startDate.replace(/-/g, '_')}_${endDate.replace(/-/g, '_')}.pdf`
+  const startDate = format(checkPeriod.value[0], 'yyyy_MMM_dd')
+  const endDate = format(checkPeriod.value[1], 'yyyy_MMM_dd')
+  const filename = `reporte_${startDate}_${endDate}.pdf`
 
   pdfMake.createPdf(pdfDefinition).download(filename)
 }

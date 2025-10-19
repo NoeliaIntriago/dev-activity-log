@@ -128,7 +128,7 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
         margin: [0, 5, 0, 0],
       },
       {
-        text: `Fecha de generación: ${format(constructNow(undefined), 'yyyy/MM/dd')}`,
+        text: `Fecha de generación: ${format(constructNow(undefined), 'yyyy/MMM/dd')}`,
         tocItem: false,
         alignment: 'center',
         italics: true,
@@ -187,7 +187,7 @@ const buildTableBody = (data: PdfData) => {
     if (idx === 0) {
       body.push([
         {
-          text: `${format(data.period[0], 'yyyy/MM/dd')} ~ ${format(data.period[1], 'yyyy/MM/dd')}`,
+          text: `${format(data.period[0], 'yyyy/MMM/dd')} ~ ${format(data.period[1], 'yyyy/MMM/dd')}`,
           rowSpan: data.activities.length,
           style: 'tableCellBold',
         },

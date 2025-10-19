@@ -25,6 +25,6 @@ const props = defineProps<{
 
 const period = computed(() => {
   if (props.data.period === null || props.data.period.length < 2) return 'No definido'
-  return `${format(props.data.period[0], 'yyyy-MM-dd')} - ${format(props.data.period[1], 'yyyy-MM-dd')}`
+  return `${format(props.data.period[0], 'yyyy/MMM/dd')} - ${format(props.data.period[1], 'yyyy/MMM/dd')}`
 })
 </script>
