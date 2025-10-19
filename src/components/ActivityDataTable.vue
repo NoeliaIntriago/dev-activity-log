@@ -10,7 +10,6 @@
       scrollable
       size="small"
       scroll-height="400px"
-      :virtual-scroller-options="{ itemSize: 46 }"
       @row-edit-save="(event) => $emit('row-edit-save', event)"
       @row-reorder="(event) => $emit('row-reorder', event)"
     >
