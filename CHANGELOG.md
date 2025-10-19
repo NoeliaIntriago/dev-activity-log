@@ -24,4 +24,13 @@ Todas las versiones siguen el formato [SemVer](https://semver.org/lang/es/) y el
 - Persistencia local de datos (local storage) para evitar pérdidas de información entre sesiones.
 - Redimensionamiento automático de anexos: las imágenes grandes se ajustan para prevenir saltos de página inesperados.
 - Limpieza rápida de la app: nuevo botón para borrar toda la información guardada de forma segura.
-- Navegación mejorada: botón “Volver al inicio” disponible desde cualquier vista.ión.
+- Navegación mejorada: botón “Volver al inicio” disponible desde cualquier ubicación.
+
+
+## [1.0.2] - 2025-10-19
+
+### ✨ Mejoras sobre 1.0.1
+
+- Reordenamiento por arrastrar y soltar de actividades en la tabla (drag & drop) para organizar el listado sin pasos extra.
+- Reordenamiento por arrastrar y soltar de las fechas adicionales (feriados/fines de semana) para priorizarlas visualmente.
+- Edición en línea de actividades directamente en la tabla (sin cambiar de vista).
