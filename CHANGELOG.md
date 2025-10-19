@@ -16,6 +16,12 @@ Todas las versiones siguen el formato [SemVer](https://semver.org/lang/es/) y el
   - Espacio para firma al final.
 - Validaciones básicas (título obligatorio, no guardar actividades vacías).
 
----
+## [1.0.1] - 2025-06-15
 
-> Esta es la primera versión funcional estable del proyecto **Dev Activity Log**. A partir de aquí, los cambios estarán versionados automáticamente.
+### ✨ Mejoras sobre 1.0.0
+
+- Pie de página con crédito de autoría en los PDF, alineado con el estilo del documento.
+- Persistencia local de datos (local storage) para evitar pérdidas de información entre sesiones.
+- Redimensionamiento automático de anexos: las imágenes grandes se ajustan para prevenir saltos de página inesperados.
+- Limpieza rápida de la app: nuevo botón para borrar toda la información guardada de forma segura.
+- Navegación mejorada: botón “Volver al inicio” disponible desde cualquier vista.ión.
