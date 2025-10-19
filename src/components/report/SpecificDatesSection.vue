@@ -36,7 +36,7 @@
         <Accordion expandIcon="pi pi-plus" collapseIcon="pi pi-minus">
           <AccordionTab v-for="(extra, index) in props.extras" :key="index">
             <template #header>
-              <Badge :value="moment(extra.date).format('YYYY/MMM/DD')" severity="secondary" />
+              <Badge :value="extra.date" severity="secondary" />
               <span class="ml-2">{{ extra.activities.length }} actividades</span>
 
               <Button
@@ -48,28 +48,12 @@
 
             <ActivityForm @add="($event) => addActivity(index, $event)" />
 
-            <div class="mt-2">
-              <DataTable :value="extra.activities" resizable-columns>
-                <template #empty>
-                  <div class="flex justify-content-center">
-                    <span class="text-muted p-3"
-                      >No hay actividades registradas para esta fecha.</span
-                    >
-                  </div>
-                </template>
-                <Column field="title" header="Título" />
-                <Column field="description" header="Descripción" />
-                <Column header="">
-                  <template #body="slotProps">
-                    <Button
-                      icon="pi pi-trash"
-                      class="p-button-danger p-button-outlined"
-                      @click="removeActivity(slotProps.index)"
-                    />
-                  </template>
-                </Column>
-              </DataTable>
-            </div>
+            <ActivityDataTable
+              :activities="extra.activities"
+              @row-edit-save="onActivityEditComplete"
+              @row-reorder="onRowReorder"
+              @remove-activity="removeActivity"
+            />
           </AccordionTab>
         </Accordion>
       </div>
@@ -79,10 +63,11 @@
 
 <script setup lang="ts">
 import type { Extras, Activity } from '@/assets/types'
+import type { DataTableRowEditSaveEvent, DataTableRowReorderEvent } from 'primevue/datatable'
 import { ref, computed } from 'vue'
 
 import ActivityForm from '../ActivityForm.vue'
-import moment from 'moment'
+import { format } from 'date-fns'
 
 const props = defineProps<{
   extras: Extras[]
@@ -104,7 +89,7 @@ const addExtra = () => {
 
   const updatedExtras = [...props.extras]
   updatedExtras.push({
-    date: date.value,
+    date: format(date.value, 'yyyy/MM/dd'),
     activities: [],
   })
   emit('update:extras', updatedExtras)
@@ -131,5 +116,18 @@ const removeActivity = (index: number) => {
   const updatedExtras = [...props.extras]
   updatedExtras.splice(index, 1)
   emit('update:extras', updatedExtras)
+}
+
+const onActivityEditComplete = (event: DataTableRowEditSaveEvent) => {
+  const { newData, index } = event
+
+  const updatedActivities = [...props.extras]
+  updatedActivities[index] = newData
+  emit('update:extras', updatedActivities)
+}
+
+const onRowReorder = (event: DataTableRowReorderEvent) => {
+  const updatedActivities = event.value
+  emit('update:extras', updatedActivities)
 }
 </script>
