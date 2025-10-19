@@ -15,11 +15,11 @@
 import type { PdfData } from '@/assets/types'
 import { useToast } from 'primevue/usetoast'
 import { useConfirm } from 'primevue/useconfirm'
-import moment from 'moment'
 import { computed, inject } from 'vue'
 import pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 import { generarPdfDefinition } from '@/utils/pdf/generateDefinition'
+import { format } from 'date-fns'
 
 pdfMake.vfs = pdfFonts.vfs
 
@@ -106,9 +106,9 @@ const generarPdf = () => {
 
   const pdfDefinition = generarPdfDefinition(props.data)
 
-  const startDate = moment(checkPeriod.value[0]).format('YYYY-MM-DD')
-  const endDate = moment(checkPeriod.value[1]).format('YYYY-MM-DD')
-  const filename = `reporte_${startDate.replace(/-/g, '_')}_${endDate.replace(/-/g, '_')}.pdf`
+  const startDate = format(checkPeriod.value[0], 'yyyy_MMM_dd')
+  const endDate = format(checkPeriod.value[1], 'yyyy_MMM_dd')
+  const filename = `reporte_${startDate}_${endDate}.pdf`
 
   pdfMake.createPdf(pdfDefinition).download(filename)
 }

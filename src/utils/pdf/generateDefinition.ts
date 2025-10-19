@@ -1,7 +1,7 @@
 import type { PdfData } from '@/assets/types/main'
-import moment from 'moment'
 import * as constants from './pdfLayoutConstants'
 import type { TDocumentDefinitions } from 'pdfmake/interfaces'
+import { constructNow, format } from 'date-fns'
 
 export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
   return {
@@ -128,7 +128,7 @@ export function generarPdfDefinition(data: PdfData): TDocumentDefinitions {
         margin: [0, 5, 0, 0],
       },
       {
-        text: `Fecha de generación: ${moment().format('YYYY/MMM/DD')}`,
+        text: `Fecha de generación: ${format(constructNow(undefined), 'yyyy/MMM/dd')}`,
         tocItem: false,
         alignment: 'center',
         italics: true,
@@ -187,7 +187,7 @@ const buildTableBody = (data: PdfData) => {
     if (idx === 0) {
       body.push([
         {
-          text: `${moment(data.period[0]).format('YYYY/MMM/DD')} ~ ${moment(data.period[1]).format('YYYY/MMM/DD')}`,
+          text: `${format(data.period[0], 'yyyy/MMM/dd')} ~ ${format(data.period[1], 'yyyy/MMM/dd')}`,
           rowSpan: data.activities.length,
           style: 'tableCellBold',
         },
@@ -208,7 +208,7 @@ const buildTableBody = (data: PdfData) => {
       if (idx === 0) {
         body.push([
           {
-            text: moment(extra.date).format('YYYY/MMM/DD'),
+            text: extra.date,
             rowSpan: extra.activities.length,
             style: 'tableCellBold',
           },

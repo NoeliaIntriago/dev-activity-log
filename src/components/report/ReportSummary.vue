@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import type { PdfData } from '@/assets/types'
+import { format } from 'date-fns'
 
-import moment from 'moment'
 import { computed } from 'vue'
 
 const props = defineProps<{
@@ -25,6 +25,6 @@ const props = defineProps<{
 
 const period = computed(() => {
   if (props.data.period === null || props.data.period.length < 2) return 'No definido'
-  return `${moment(props.data.period[0]).format('YYYY/MMM/DD')} - ${moment(props.data.period[1]).format('YYYY/MMM/DD')}`
+  return `${format(props.data.period[0], 'yyyy/MMM/dd')} - ${format(props.data.period[1], 'yyyy/MMM/dd')}`
 })
 </script>

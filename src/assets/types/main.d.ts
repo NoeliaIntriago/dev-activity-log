@@ -8,7 +8,7 @@ export type PdfData = {
 }
 
 export type Extras = {
-  date: Date
+  date: string
   activities: Activity[]
 }
 

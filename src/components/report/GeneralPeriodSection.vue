@@ -11,7 +11,7 @@
         <label class="font-bold mb-2 block">Período de Reporte</label>
         <Calendar
           class="w-full"
-          :modelValue="period"
+          :model-value="period"
           date-format="yy/M/dd"
           selection-mode="range"
           show-icon
@@ -19,7 +19,7 @@
           hide-on-range-selection
           :manual-input="false"
           touch-UI
-          @update:modelValue="updatePeriod"
+          @update:model-value="updatePeriod"
         />
       </div>
 
@@ -28,26 +28,13 @@
         <label class="font-bold block mb-2">Actividades Generales</label>
 
         <ActivityForm @add="($event) => addActivity($event)" />
-        <div>
-          <DataTable :value="props.activities" resizable-columns>
-            <template #empty>
-              <div class="flex justify-content-center">
-                <span class="text-muted p-3">No hay actividades registradas.</span>
-              </div>
-            </template>
-            <Column field="title" header="Título" />
-            <Column field="description" header="Descripción" />
-            <Column header="">
-              <template #body="slotProps">
-                <Button
-                  icon="pi pi-trash"
-                  class="p-button-danger p-button-outlined"
-                  @click="removeActivity(slotProps.index)"
-                />
-              </template>
-            </Column>
-          </DataTable>
-        </div>
+
+        <ActivityDataTable
+          :activities="props.activities"
+          @row-edit-save="onActivityEditComplete"
+          @row-reorder="onRowReorder"
+          @remove-activity="removeActivity"
+        />
       </div>
     </template>
   </Card>
@@ -55,8 +42,10 @@
 
 <script setup lang="ts">
 import type { Activity } from '@/assets/types'
+import type { DataTableRowEditSaveEvent, DataTableRowReorderEvent } from 'primevue/datatable'
 
 import ActivityForm from '../ActivityForm.vue'
+import ActivityDataTable from '../ActivityDataTable.vue'
 
 const props = defineProps<{
   period: Date[]
@@ -80,6 +69,19 @@ const addActivity = (activity: Activity) => {
 const removeActivity = (index: number) => {
   const updatedActivities = [...props.activities]
   updatedActivities.splice(index, 1)
+  emit('update:activities', updatedActivities)
+}
+
+const onActivityEditComplete = (event: DataTableRowEditSaveEvent) => {
+  const { newData, index } = event
+
+  const updatedActivities = [...props.activities]
+  updatedActivities[index] = newData
+  emit('update:activities', updatedActivities)
+}
+
+const onRowReorder = (event: DataTableRowReorderEvent) => {
+  const updatedActivities = event.value
   emit('update:activities', updatedActivities)
 }
 </script>

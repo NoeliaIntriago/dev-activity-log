@@ -7,6 +7,7 @@
         type="text"
         class="w-full"
         placeholder="Título de la actividad"
+        @keydown.enter="addActivity"
       />
     </div>
     <div class="col-12 lg:col-8">
@@ -15,6 +16,7 @@
         rows="5"
         class="w-full"
         placeholder="Descripción de la actividad"
+        @keydown.enter="addActivity"
       />
     </div>
   </div>
