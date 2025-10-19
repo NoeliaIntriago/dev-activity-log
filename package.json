@@ -18,7 +18,8 @@
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primevue": "^3.47.1",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "vue-draggable-next": "^2.3.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
