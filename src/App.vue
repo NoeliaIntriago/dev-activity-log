@@ -83,7 +83,7 @@ provide('hasSavedData', hasSavedData)
           <AnnexUploader v-model:annexes="data.annexes" />
         </div>
         <ReportSummary :data="data" />
-        <PdfGeneratorSection :data="data" />
+        <PdfGeneratorSection v-model:data="data" />
       </TabPanel>
     </TabView>
   </main>
