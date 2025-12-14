@@ -78,14 +78,15 @@
                 <div class="mb-3">
                   <ActivityForm @add="($event) => addActivity(index, $event)" />
                 </div>
-
-                <ActivityDataTable
-                  :key="`table-${index}-${extra.activities.length}`"
-                  :activities="extra.activities"
-                  @row-edit-save="onActivityEditComplete"
-                  @row-reorder="onRowReorder"
-                  @remove-activity="removeActivity"
-                />
+                <div class="w-100" style="overflow-x: auto">
+                  <ActivityDataTable
+                    :key="`table-${index}-${extra.activities.length}`"
+                    :activities="extra.activities"
+                    @row-edit-save="onActivityEditComplete"
+                    @row-reorder="onRowReorder"
+                    @remove-activity="removeActivity"
+                  />
+                </div>
               </div>
             </template>
           </Card>
