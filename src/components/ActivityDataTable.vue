@@ -5,11 +5,7 @@
       v-model:editing-rows="editingRows"
       column-resize-mode="fit"
       edit-mode="row"
-      resizable-columns
-      reorderable-columns
-      scrollable
       size="small"
-      scroll-height="400px"
       @row-edit-save="(event) => $emit('row-edit-save', event)"
       @row-reorder="(event) => $emit('row-reorder', event)"
     >
@@ -18,10 +14,8 @@
           <span class="text-muted p-3">No hay actividades registradas.</span>
         </div>
       </template>
-
-      <Column row-reorder header-style="width: 3rem" :reorderable-column="false" />
-
-      <Column field="title" header="Título" style="min-width: 20rem; width: 35rem">
+      <Column row-reorder style="width: 5%" />
+      <Column field="title" header="Título" style="width: 30%">
         <template #editor="{ data, field }">
           <InputText
             v-model="data[field]"
@@ -34,8 +28,7 @@
           <span>{{ data[field] }}</span>
         </template>
       </Column>
-
-      <Column field="description" header="Descripción">
+      <Column field="description" header="Descripción" style="width: 50%">
         <template #editor="{ data, field }">
           <Textarea
             v-model="data[field]"
@@ -48,8 +41,7 @@
           <span>{{ data[field] }}</span>
         </template>
       </Column>
-
-      <Column :row-editor="true" style="width: 10%; min-width: 5rem" body-style="text-align:center">
+      <Column :row-editor="true" style="width: 10%" body-style="text-align:center">
         <template #roweditoriniticon>
           <i class="pi pi-pencil" style="color: goldenrod"></i>
         </template>
@@ -60,8 +52,7 @@
           <i class="pi pi-times" style="color: red"></i>
         </template>
       </Column>
-
-      <Column style="width: 5rem">
+      <Column style="width: 5%">
         <template #body="slotProps">
           <Button
             icon="pi pi-trash"
@@ -74,7 +65,6 @@
     </DataTable>
   </div>
 </template>
-
 <script setup lang="ts">
 import type { Activity } from '@/assets/types'
 import { ref } from 'vue'

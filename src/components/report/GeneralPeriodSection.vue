@@ -26,9 +26,9 @@
       <!-- Sección: Actividades Generales -->
       <div class="mb-3">
         <label class="font-bold block mb-2">Actividades Generales</label>
-
         <ActivityForm @add="($event) => addActivity($event)" />
-
+      </div>
+      <div class="w-100" style="overflow-x: auto">
         <ActivityDataTable
           :activities="props.activities"
           @row-edit-save="onActivityEditComplete"
